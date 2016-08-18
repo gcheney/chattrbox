@@ -1,0 +1,19 @@
+{
+  "name": "chattrbox",
+  "version": "1.0.0",
+  "description": "A chat app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcheney/chattrbox.git"
+  },
+  "author": "Glendon Cheney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcheney/chattrbox/issues"
+  },
+  "homepage": "https://github.com/gcheney/chattrbox#readme"
+}
