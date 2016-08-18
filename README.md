@@ -1,2 +1,2 @@
-# chattrbox
-A chat app for chatting
+# Chattrbox
+A chat room app 
