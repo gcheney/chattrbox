@@ -17,6 +17,7 @@ io.on('connection', function(socket) {
     });
 
     socket.emit('message', {
+        name: 'Server',
         text: 'Welcome to Chattrbox!',
         timestamp: moment.valueOf()
     });

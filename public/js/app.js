@@ -1,18 +1,14 @@
 var socket = io();
-var name = getQueryString('name');
+var name = getQueryString('name') || 'Guest';
 var room = getQueryString('room');
-
-console.log(name + ' joined ' + room);
 
 socket.on('connection', function() {
     console.log('Connected to Chattrbox');
 });
 
 socket.on('message', function(message) {
-    var timestamp = moment.utc(message.timestamp);    
-    $('.messages').append('<p><strong>' 
-                            + timestamp.local().format('h:mm a') 
-                            +  ': </strong>' + message.text + '</p>');
+    var timestamp = moment.utc(message.timestamp);   
+    $('.messages').append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');
 });
 
 // Handle submit of new messages
@@ -22,6 +18,7 @@ $form.on('submit', function(e){
     
     var $message = $form.find('input[name=message]');
     socket.emit('message', {
+        name: name,
         text: $message.val()
     });
     
