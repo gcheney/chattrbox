@@ -1,13 +1,14 @@
 var socket = io();
 
-socket.on('connection', function(){
-    console.log('Connected via socket.io');
+socket.on('connection', function() {
+    console.log('Connected to Chattrbox');
 });
 
-socket.on('message', function(message){
-    console.log('New message: ' + message.text);
-    
-    $('.messages').append('<p>' + message.text + '</p>');
+socket.on('message', function(message) {
+    var timestamp = moment.utc(message.timestamp);    
+    $('.messages').append('<p><strong>' 
+                            + timestamp.local().format('h:mm a') 
+                            +  ': </strong>' + message.text + '</p>');
 });
 
 // Handle submit of new messages
