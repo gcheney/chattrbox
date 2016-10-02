@@ -18,6 +18,7 @@
   "homepage": "https://github.com/gcheney/chattrbox#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "moment": "^2.15.1",
     "socket.io": "^1.4.8"
   }
 }
