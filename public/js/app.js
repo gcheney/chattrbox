@@ -1,4 +1,8 @@
 var socket = io();
+var name = getQueryString('name');
+var room = getQueryString('room');
+
+console.log(name + ' joined ' + room);
 
 socket.on('connection', function() {
     console.log('Connected to Chattrbox');
@@ -23,3 +27,17 @@ $form.on('submit', function(e){
     
     $message.val('');
 });
+
+
+function getQueryString(str) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == str) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    
+    return undefined;
+}
