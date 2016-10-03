@@ -5,8 +5,12 @@ var room = getQueryString('room');
 // dynamically set room name
 $('.room-name').text(room);
 
-socket.on('connection', function() {
+socket.on('connect', function() {
     console.log('Connected to Chattrbox');
+    socket.emit('joinRoom', {
+        name: name, 
+        room: room
+    });
 });
 
 socket.on('message', function(message) {

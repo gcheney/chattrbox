@@ -6,16 +6,32 @@ var moment = require('moment');
 
 app.use(express.static(__dirname + '/public'));
 
-io.on('connection', function(socket) {
-    console.log('Connected via socket.io');
+var userInfo = {};
+
+io.on('connection', function(socket) {  
+    console.log('Connected to Chattrbox');
+    
+    socket.on('joinRoom', function(req) {
+        console.log('Here!');
+        userInfo[socket.id] = req;      
+        socket.join(req.room);
+        var text =  req.name + ' has joined ' + req.room + '!';
+        console.log(text);
+        socket.broadcast.to(req.room).emit('message', {
+            name: 'System',
+            text: text,
+            timestamp: moment.valueOf()
+        }); 
+    });
     
     socket.on('message', function(message) {
-        console.log('Message received: ' + message.text);
-        
+        var clientRoom = userInfo[socket.id].room;
+        console.log('New message in ' + clientRoom + ': ' + message);
         message.timestamp = moment.valueOf();
-        io.emit('message', message);
+        io.to(clientRoom).emit('message', message);
     });
 
+    // initial server message
     socket.emit('message', {
         name: 'Server',
         text: 'Welcome to Chattrbox!',
