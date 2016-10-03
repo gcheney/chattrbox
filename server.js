@@ -16,7 +16,6 @@ io.on('connection', function(socket) {
         socket.join(req.room);
         var text =  req.name + ' has joined ' + req.room + '!';
         console.log(text);
-        
         socket.broadcast.to(req.room).emit('message', {
             name: 'System',
             text: text,
@@ -41,7 +40,7 @@ io.on('connection', function(socket) {
     
     socket.on('message', function(message) {
         var clientRoom = userInfo[socket.id].room;
-        console.log('New message in ' + clientRoom + ': ' + message);
+        console.log('New message in ' + clientRoom + ': ' + message.text);
         message.timestamp = moment.valueOf();
         io.to(clientRoom).emit('message', message);
     });
