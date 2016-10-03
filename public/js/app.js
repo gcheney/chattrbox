@@ -2,6 +2,9 @@ var socket = io();
 var name = getQueryString('name') || 'Guest';
 var room = getQueryString('room');
 
+// dynamically set room name
+$('.room-name').text(room);
+
 socket.on('connection', function() {
     console.log('Connected to Chattrbox');
 });
@@ -32,7 +35,7 @@ function getQueryString(str) {
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
         if (decodeURIComponent(pair[0]) == str) {
-            return decodeURIComponent(pair[1]);
+            return decodeURIComponent(pair[1].replace(/\+/g, ' '));
         }
     }
     
