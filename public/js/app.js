@@ -20,7 +20,7 @@ socket.on('message', function(message) {
 
 // Handle submit of new messages
 var $form = $('#message-form');
-$form.on('submit', function(e){
+$form.on('submit', function(e) {
     e.preventDefault();
     
     var $message = $form.find('input[name=message]');
