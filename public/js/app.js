@@ -6,7 +6,6 @@ var room = getQueryString('room');
 $('.room-name').text(room);
 
 socket.on('connect', function() {
-    console.log('Connected to Chattrbox');
     socket.emit('joinRoom', {
         name: name, 
         room: room
@@ -16,6 +15,12 @@ socket.on('connect', function() {
 socket.on('message', function(message) {
     var timestamp = moment.utc(message.timestamp);   
     $('.messages').append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');
+});
+
+socket.on('sendCurrentUsers', function(userData) {
+    userData.users.forEach(function(user) {
+        $('.current-users').append('<p>' + user + '</p>');
+    }); 
 });
 
 // Handle submit of new messages

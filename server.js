@@ -6,40 +6,47 @@ var moment = require('moment');
 
 app.use(express.static(__dirname + '/public'));
 
-var userInfo = {}; // store user socket id and info
+var clients = {}; // store user socket id and info
 
 io.on('connection', function(socket) {  
-    console.log('Connected to Chattrbox');
     
     socket.on('joinRoom', function(req) {
-        userInfo[socket.id] = req;      
-        socket.join(req.room);
-        var text =  req.name + ' has joined ' + req.room + '!';
+        clients[socket.id] = req;     
+        var name = req.name;
+        var room = req.room;
+        
+        socket.join(room);
+        var text =  name + ' has joined ' + room + '!';
         console.log(text);
-        socket.broadcast.to(req.room).emit('message', {
+        
+        socket.broadcast.to(room).emit('message', {
             name: 'System',
             text: text,
             timestamp: moment.valueOf()
         }); 
+        
+        sendCurrentUsers(socket.id, room);
     });
     
     socket.on('disconnect', function() {
-        var user = userInfo[socket.id];
+        var user = clients[socket.id];
+        
         if (typeof user !== 'undefined') {
             socket.leave(user.room);
             var text = user.name + ' has left ' + user.room + '.';
             console.log(text);
+            
             io.to(user.room).emit('message', {
                 name: 'System',
                 text: text,
                 timestamp: moment.valueOf()
             });
-            delete userInfo[socket.id];
+            delete clients[socket.id];
         }
     });
     
     socket.on('message', function(message) {
-        var clientRoom = userInfo[socket.id].room;
+        var clientRoom = clients[socket.id].room;
         console.log('New message in ' + clientRoom + ': ' + message.text);
         message.timestamp = moment.valueOf();
         io.to(clientRoom).emit('message', message);
@@ -51,6 +58,21 @@ io.on('connection', function(socket) {
         text: 'Welcome to Chattrbox!',
         timestamp: moment.valueOf()
     });
+    
+    function sendCurrentUsers(socketid, room) {
+        var users = [];
+
+        Object.keys(clients).forEach(function(id) {
+            var user = clients[id];
+            if (user.room === room) {
+                users.push(user.name);
+            }
+        });
+        
+        io.to(socketid).emit('sendCurrentUsers', {
+           users: users 
+        });
+    }
 });
 
 var PORT = process.env.PORT || 3000;
