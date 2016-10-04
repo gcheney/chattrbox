@@ -35,15 +35,22 @@ io.on('connection', function(socket) {
         var user = clients[socket.id];
         
         if (typeof user !== 'undefined') {
-            socket.leave(user.room);
-            var text = user.name + ' has left ' + user.room + '.';
+            var room = user.room;
+            var name = user.name;
+            socket.leave(room);
+            var text = user.name + ' has left ' + room + '.';
             console.log(text);
             
-            io.to(user.room).emit('message', {
+            io.to(room).emit('message', {
                 name: 'System',
                 text: text,
                 timestamp: moment.valueOf()
             });
+            
+            socket.broadcast.to(room).emit('removeUser', {
+                name: name
+            });
+            
             delete clients[socket.id];
         }
     });
