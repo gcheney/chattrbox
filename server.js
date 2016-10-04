@@ -11,6 +11,10 @@ var clients = {}; // store user socket id and info
 io.on('connection', function(socket) {  
     
     socket.on('joinRoom', function(req) {
+        if (!nameIsAvailable(req.name, req.room)) {
+            req.name = req.name.concat('_');
+        }
+        console.log(req);
         clients[socket.id] = req;     
         var name = req.name;
         var room = req.room;
@@ -82,6 +86,17 @@ io.on('connection', function(socket) {
         io.to(socketid).emit('sendCurrentUsers', {
            users: users 
         });
+    }
+    
+    function nameIsAvailable(name, room) {
+        var isAvailable = true;
+        Object.keys(clients).forEach(function(id) {
+            var user = clients[id];
+            if (user.name === name && user.room === room) {
+                isAvailable = false;
+            }
+        });
+        return isAvailable;
     }
 });
 
