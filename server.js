@@ -16,6 +16,7 @@ io.on('connection', function(socket) {
         var room = req.room;
         
         socket.join(room);
+        sendCurrentUsers(socket.id, room);
         var text =  name + ' has joined ' + room + '!';
         console.log(text);
         
@@ -25,7 +26,9 @@ io.on('connection', function(socket) {
             timestamp: moment.valueOf()
         }); 
         
-        sendCurrentUsers(socket.id, room);
+        socket.broadcast.to(room).emit('newUser', {
+            name: name
+        });
     });
     
     socket.on('disconnect', function() {

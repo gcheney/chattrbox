@@ -17,11 +17,18 @@ socket.on('message', function(message) {
     $('.messages').append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');
 });
 
+
 socket.on('sendCurrentUsers', function(userData) {
     userData.users.forEach(function(user) {
         $('.current-users').append('<p>' + user + '</p>');
     }); 
 });
+
+
+socket.on('newUser', function(user) {
+    $('.current-users').append('<p>' + user.name + '</p>');
+});
+
 
 // Handle submit of new messages
 var $form = $('#message-form');
@@ -37,7 +44,7 @@ $form.on('submit', function(e) {
     $message.val('');
 });
 
-
+// parse query strings
 function getQueryString(str) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
