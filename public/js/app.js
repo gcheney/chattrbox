@@ -16,7 +16,11 @@ socket.on('connect', function() {
 // when message is received
 socket.on('message', function(message) {
     var timestamp = moment.utc(message.timestamp);   
-    $('.messages').append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');
+    var $messageGroup = $('.messages');
+    
+    var $message = $('<li class="list-group-item"></li>')
+    $message.append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');  
+    $messageGroup.append($message);
 });
 
 // create current users list for new visitor
