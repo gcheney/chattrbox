@@ -21,19 +21,20 @@ socket.on('message', function(message) {
     var $message = $('<li class="list-group-item"></li>')
     $message.append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');  
     $messageGroup.append($message);
+    $(window).scrollTo('max');
 });
 
 // create current users list for new visitor
 socket.on('sendCurrentUsers', function(userData) {
     userData.users.forEach(function(user) {
-        var text = '<p id="' + user + '">' + user + '</p>'
+        var text = '<p id="' + user + '">' + user + '</p>';
         $('.current-users').append(text);
     }); 
 });
 
 // Add new users to current users list
 socket.on('newUser', function(user) {
-    var text = '<p id="' + user.name + '">' + user.name + '</p>'
+    var text ='<p id="' + user.name + '">'  + user.name + '</p></li>';
     $('.current-users').append(text);
 });
 
