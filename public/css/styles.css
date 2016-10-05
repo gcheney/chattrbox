@@ -28,4 +28,6 @@
 
 .user-well {
     margin-top: 35px;
+    background-color: gray;
+    color: white;
 }
