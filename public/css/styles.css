@@ -1,6 +1,16 @@
+
+
 .vertical-center {
     min-height: 100vh;
     margin: 0;
     display: flex;
     align-items: center;
+}
+
+title {
+    margin: 24px 0;
+}
+
+chat-well {
+    margin-top: 35px;
 }
