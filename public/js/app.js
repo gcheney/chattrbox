@@ -45,15 +45,16 @@ socket.on('removeUser', function(user) {
 });
 
 
-
+// confirm navigation to new chat room
 $('#change-rooms').on('click', function(e) {
-    return confirm('Are you sure you want to leave this chat?');
+    return confirm('Are you sure you want to leave this chatroom?');
 });
 
-// Handle validation and submit of new messages
+// get message form and message input
 var $messageForm = $('#message-form');
 var $messageInput = $messageForm.find('input[name=message]');
 
+// check for message typing
 $messageInput.keypress(function(e) {
     var input = String.fromCharCode(e.keyCode);
     if (/[a-zA-Z0-9-_ ]/.test(input)) {
@@ -61,6 +62,7 @@ $messageInput.keypress(function(e) {
     }
 });
 
+// Handle validation and submit of new messages
 $messageForm.on('submit', function(e) {
     e.preventDefault();
     
@@ -78,7 +80,17 @@ $messageForm.on('submit', function(e) {
     $messageInput.val('');
 });
 
-// check for message content
+// check for escape button
+$(document).keyup(function(e) {
+     if (e.keyCode == 27) { 
+        var leaveChatroom = confirm('Are you sure you want to leave this chatroom?');
+        if (leaveChatroom) {
+            window.location.href = '/index.html';
+        }
+    }
+});
+
+// check for string content
 function isBlankOrEmpty(str) {
     return (!str || 0 === str.length || /^\s*$/.test(str));
 }
