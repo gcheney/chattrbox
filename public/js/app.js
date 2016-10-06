@@ -52,23 +52,30 @@ $('#change-rooms').on('click', function(e) {
 
 // Handle validation and submit of new messages
 var $messageForm = $('#message-form');
+var $messageInput = $messageForm.find('input[name=message]');
+
+$messageInput.keypress(function(e) {
+    var input = String.fromCharCode(e.keyCode);
+    if (/[a-zA-Z0-9-_ ]/.test(input)) {
+        $messageInput.removeClass('message-error');
+    }
+});
+
 $messageForm.on('submit', function(e) {
     e.preventDefault();
     
-    var $message = $messageForm.find('input[name=message]');
-    $message.removeClass('message-error');
     // check for message
-    if (isBlankOrEmpty($message.val())) {
-        $message.addClass('message-error');
+    if (isBlankOrEmpty($messageInput.val())) {
+        $messageInput.addClass('message-error');
         return;
     }
     
     socket.emit('message', {
         name: name,
-        text: $message.val()
+        text: $messageInput.val()
     });
     
-    $message.val('');
+    $messageInput.val('');
 });
 
 // check for message content
