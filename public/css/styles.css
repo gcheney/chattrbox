@@ -3,6 +3,10 @@
     margin-bottom: 10px;
 }
 
+.footer-container {
+    margin-top: 15px;
+}
+
 .navbar {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
