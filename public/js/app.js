@@ -52,7 +52,7 @@ $messageForm.on('submit', function(e) {
     var $message = $messageForm.find('input[name=message]');
     $message.removeClass('message-error');
     // check for message
-    if (!$message.val()) {
+    if (isBlankOrEmpty($message.val())) {
         $message.addClass('message-error');
         return;
     }
@@ -64,6 +64,11 @@ $messageForm.on('submit', function(e) {
     
     $message.val('');
 });
+
+// check for message content
+function isBlankOrEmpty(str) {
+    return (!str || 0 === str.length || /^\s*$/.test(str));
+}
 
 // parse query strings
 function getQueryString(str) {
