@@ -14,7 +14,7 @@ io.on('connection', function(socket) {
         if (!nameIsAvailable(req.name, req.room)) {
             req.name = req.name.concat('_');
         }
-        console.log(req);
+        
         clients[socket.id] = req;     
         var name = req.name;
         var room = req.room;
@@ -61,7 +61,9 @@ io.on('connection', function(socket) {
     
     socket.on('message', function(message) {
         var clientRoom = clients[socket.id].room;
-        console.log('New message in ' + clientRoom + ': ' + message.text);
+        var clientName = clients[socket.id].name;
+        console.log('New message from ' + clientName 
+                    + '  in ' + clientRoom + ': ' + message.text);
         message.timestamp = moment.valueOf();
         io.to(clientRoom).emit('message', message);
     });
@@ -98,6 +100,18 @@ io.on('connection', function(socket) {
         });
         return isAvailable;
     }
+    
+    function makeGuestId() {
+        var id = '';
+        var nums = '0123456789';
+
+        for (var i = 0; i < 5; i++) {
+            id += nums.charAt(Math.floor(Math.random() * nums.length));
+        }
+
+        return id;
+    }
+    
 });
 
 var PORT = process.env.PORT || 3000;
