@@ -1,6 +1,26 @@
+/* Bootstrap styles */
 .btn {
     margin-bottom: 10px;
 }
+
+.navbar {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.navbar-brand {
+    float:none;
+}
+
+/* Custom Styles */
 
 .hidden-submit {
     border: 0 none;
