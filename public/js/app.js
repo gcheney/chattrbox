@@ -44,6 +44,12 @@ socket.on('removeUser', function(user) {
     $(target).remove();
 });
 
+
+
+$('#change-rooms').on('click', function(e) {
+    return confirm('Are you sure you want to leave this chat?');
+});
+
 // Handle validation and submit of new messages
 var $messageForm = $('#message-form');
 $messageForm.on('submit', function(e) {
