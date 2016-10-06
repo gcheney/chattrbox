@@ -44,12 +44,19 @@ socket.on('removeUser', function(user) {
     $(target).remove();
 });
 
-// Handle submit of new messages
-var $form = $('#message-form');
-$form.on('submit', function(e) {
+// Handle validation and submit of new messages
+var $messageForm = $('#message-form');
+$messageForm.on('submit', function(e) {
     e.preventDefault();
     
-    var $message = $form.find('input[name=message]');
+    var $message = $messageForm.find('input[name=message]');
+    $message.removeClass('message-error');
+    // check for message
+    if (!$message.val()) {
+        $message.addClass('message-error');
+        return;
+    }
+    
     socket.emit('message', {
         name: name,
         text: $message.val()
