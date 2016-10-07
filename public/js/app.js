@@ -18,10 +18,12 @@ socket.on('message', function(message) {
     var timestamp = moment.utc(message.timestamp);   
     var $messageGroup = $('.messages');
     
-    var $message = $('<li class="list-group-item"></li>')
-    $message.append('<p><strong>' + message.name + ' ' + timestamp.local().format('h:mm a') +  ': </strong>' + message.text + '</p>');  
+    var $message = $('<li class="list-group-item"></li>');
+    $message.append('<p><strong>' + message.name + ' ' 
+                    + timestamp.local().format('h:mm a') 
+                    +  ': </strong>' + message.text + '</p>');  
     $messageGroup.append($message);
-    $(window).scrollTo('max');
+    $(window).scrollTo('max'); // scroll to bottom on new message
 });
 
 // create current users list for new visitor
@@ -83,7 +85,7 @@ $messageForm.on('submit', function(e) {
 // check for escape button
 $(document).keyup(function(e) {
      if (e.keyCode == 27) { 
-        var leaveChatroom = confirm('Are you sure you want to leave this chatroom?');
+        var leaveChatroom = confirm('Are you sure you want to leave?');
         if (leaveChatroom) {
             window.location.href = '/index.html';
         }
