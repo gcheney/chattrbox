@@ -12,7 +12,7 @@ io.on('connection', function(socket) {
     
     socket.on('joinRoom', function(req) {
         if (!nameIsAvailable(req.name, req.room)) {
-            req.name = req.name.concat('_');
+            req.name = 'Guest' + makeGuestId();
         }
         
         clients[socket.id] = req;     
@@ -117,4 +117,7 @@ io.on('connection', function(socket) {
 var PORT = process.env.PORT || 3000;
 http.listen(PORT, function() {
     console.log('Server is listening on port ' + PORT);
+    if (app.get('env') === 'development') {
+        console.log('http://127.0.0.1:' + PORT);
+    }
 });
