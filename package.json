@@ -1,9 +1,10 @@
 {
   "name": "chattrbox",
-  "version": "1.0.0",
-  "description": "A chat app",
+  "version": "1.0.1",
+  "description": "A chat app that lets users dynamically create chat rooms to chat with others",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
