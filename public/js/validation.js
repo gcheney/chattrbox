@@ -27,10 +27,12 @@ $(document).ready(function() {
     });
     
     $('#name-input').keypress(function(e) {
-        var input = String.fromCharCode(e.keyCode);
-        if (/[a-zA-Z0-9-_ ]/.test(input)) {
-            $('#name-input').removeClass('validation-error');
-            $('#name-val-msg').remove();
-        }
+        $('#name-input').removeClass('validation-error');
+        $('#name-val-msg').remove();
+    });
+    
+    $('#room-input').keypress(function(e) {
+        $('#room-input').removeClass('validation-error');
+        $('#room-val-msg').remove();
     });
 });
