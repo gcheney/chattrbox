@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
         var room = req.room;
         
         socket.join(room);
-        sendCurrentUsers(socket.id, room);
+        sendCurrentUsers(socket.id, room, name);
         var text =  name + ' has joined ' + room + '!';
         console.log(text);
         
@@ -62,9 +62,12 @@ io.on('connection', function(socket) {
     socket.on('message', function(message) {
         var clientRoom = clients[socket.id].room;
         var clientName = clients[socket.id].name;
+        
         console.log('New message from ' + clientName 
                     + '  in ' + clientRoom + ': ' + message.text);
+        
         message.timestamp = moment.valueOf();
+        message.name = clientName;
         io.to(clientRoom).emit('message', message);
     });
 
@@ -75,7 +78,7 @@ io.on('connection', function(socket) {
         timestamp: moment.valueOf()
     });
     
-    function sendCurrentUsers(socketid, room) {
+    function sendCurrentUsers(socketid, room, name) {
         var users = [];
 
         Object.keys(clients).forEach(function(id) {
@@ -86,7 +89,7 @@ io.on('connection', function(socket) {
         });
         
         io.to(socketid).emit('sendCurrentUsers', {
-           users: users 
+            users: users        
         });
     }
     
