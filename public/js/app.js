@@ -46,51 +46,58 @@ socket.on('removeUser', function(user) {
     $(target).remove();
 });
 
-
-// confirm navigation to new chat room
-$('#change-rooms').on('click', function(e) {
-    return confirm('Are you sure you want to leave this chatroom?');
-});
-
-// get message form and message input
-var $messageForm = $('#message-form');
-var $messageInput = $messageForm.find('input[name=message]');
-
-// check for message typing
-$messageInput.keypress(function(e) {
-    var input = String.fromCharCode(e.keyCode);
-    if (/[a-zA-Z0-9-_ ]/.test(input)) {
-        $messageInput.removeClass('message-error');
-    }
-});
-
-// Handle validation and submit of new messages
-$messageForm.on('submit', function(e) {
-    e.preventDefault();
-    
-    // check for message
-    if (isBlankOrEmpty($messageInput.val())) {
-        $messageInput.addClass('message-error');
-        return;
-    }
-    
-    socket.emit('message', {
-        name: name,
-        text: $messageInput.val()
+$(document).ready(function(){
+    // confirm navigation to new chat room
+    $('#change-rooms').on('click', function(e) {
+        return confirm('Are you sure you want to leave this chatroom?');
     });
-    
-    $messageInput.val('');
+
+
+    // check for message typing
+    $('#message-input').keypress(function(e) {
+        var input = String.fromCharCode(e.keyCode);
+        if (/[a-zA-Z0-9-_ ]/.test(input)) {
+            $('#message-input').removeClass('message-error');
+        }
+    });
+
+    // Handle validation and submit of new messages
+    $('#message-form').on('submit', function(e) {
+        e.preventDefault();
+
+        var $messageInput = $('#message-input');
+
+        // check for message
+        if (isBlankOrEmpty($messageInput.val())) {
+            $messageInput.addClass('message-error');
+            return;
+        }
+
+        socket.emit('message', {
+            name: name,
+            text: $messageInput.val()
+        });
+
+        $messageInput.val('');
+    });
+
+    $('#send-message').on('click', function(){
+        $('#message-form').submit();
+    });
+
+    // check for escape button
+    $(document).keyup(function(e) {
+         if (e.keyCode == 27) { 
+            var leaveChatroom = confirm('Are you sure you want to leave?');
+            if (leaveChatroom) {
+                window.location.href = '/index.html';
+            }
+        }
+    });
 });
 
-// check for escape button
-$(document).keyup(function(e) {
-     if (e.keyCode == 27) { 
-        var leaveChatroom = confirm('Are you sure you want to leave?');
-        if (leaveChatroom) {
-            window.location.href = '/index.html';
-        }
-    }
-});
+
+// Utility functions
 
 // check for string content
 function isBlankOrEmpty(str) {
