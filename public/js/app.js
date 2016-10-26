@@ -1,12 +1,14 @@
 var socket = io();
-var name = getQueryString('name') || 'Guest';
-var room = getQueryString('room');
-
-// dynamically set room name
-$('.room-name').text(room);
 
 // on connection - join room
 socket.on('connect', function() {
+    // get query string variables
+    var name = getQueryString('name') || 'Guest';
+    var room = getQueryString('room');
+    
+    // dynamically set room name
+    $('.room-name').text(room);
+    
     socket.emit('joinRoom', {
         name: name, 
         room: room
@@ -74,7 +76,6 @@ $(document).ready(function(){
         }
 
         socket.emit('message', {
-            name: name,
             text: $messageInput.val()
         });
 
