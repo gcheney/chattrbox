@@ -56,7 +56,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-comment"></i>
                                     </span>
-                                    <input type="text" class="input-lg form-control" name="message" placeholder="Start Chatting" />
+                                    <input type="text" class="input-lg form-control" name="message" placeholder="Start Chatting" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="hidden-submit">
@@ -65,7 +65,8 @@
                         </form>
                     </div>
                     <div class="col-md-2">
-                        <a href="/index.html" id="change-rooms" class="btn btn-primary btn-lg">Change Rooms</a>
+                        <button id="send-message" class="btn btn-success btn-lg">Send</button>
+                        <a href="/index.html" id="change-rooms" class="btn btn-danger btn-lg">Leave</a>
                     </div>
                 </footer>
             </div>
