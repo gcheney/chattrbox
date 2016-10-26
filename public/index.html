@@ -6,8 +6,8 @@
         <title>Chattrbox</title>
         <meta name="description" content="Chattrbox - Chat with new people">
         <meta name="author" content="Glendon Cheney">
-        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" >
-        <link rel="stylesheet" href="/css/styles.css" type="text/css" >
+        <link rel="stylesheet" href="/dist/css/bootstrap.min.css" type="text/css" >
+        <link rel="stylesheet" href="/dist/css/styles.min.css" type="text/css" >
 
         <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -64,37 +64,8 @@
             </div>
         </div>
         
-        <script src="/js/jquery-2.2.5.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            // validate join chat form 
-            var $joinForm = $('#join-form');
-            $joinForm.on('submit', function(e) {
-                console.log('here');
-                var $nameInput = $('#name-input');
-                var $roomInput = $('#room-input');
-
-                //hide old validation messages
-                $('.text-danger').hide();
-                $nameInput.removeClass('validation-error');
-                $roomInput.removeClass('validation-error');
-
-                //check for validation success
-                var validtionSuccess = true;
-                if (!$nameInput.val()) {
-                    $nameInput.addClass('validation-error');
-                    $joinForm.prepend('<ul class="text-danger"><li>Please create a display name</li></ul>');
-                    validtionSuccess = false;
-                }              
-                if (!$roomInput.val()) {
-                    $roomInput.addClass('validation-error');
-                    $joinForm.prepend('<ul class="text-danger"><li>Please enter the chat room name</li></ul>');
-                    validtionSuccess = false;
-                }
-
-                return validtionSuccess;
-            });
-
-        </script>   
+        <script src="/dist/js/jquery-2.2.5.min.js" type="text/javascript"></script>
+        <script src="/js/validation.js" type="text/javascript"></script>   
     </body>
     
 </html>
