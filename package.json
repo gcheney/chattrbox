@@ -1,6 +1,9 @@
 {
   "name": "chattrbox",
   "version": "1.0.1",
+  "engines": {
+    "node": "4.8.4"
+  },
   "description": "A chat app that lets users dynamically create chat rooms to chat with others",
   "main": "server.js",
   "scripts": {
